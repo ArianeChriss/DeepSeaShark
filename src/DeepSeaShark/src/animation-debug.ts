@@ -18,7 +18,7 @@ const AnimationDebugComponent = ecs.registerComponent({
   },
   
   stateMachine: ({defineState, eid, world, dataAttribute}) => {
-    defineState('initial-state').initial().listen(eid, ecs.events.GLTF_ANIMATION_LOOP, (event) => {
+    defineState('initial-state').initial().listen(eid, ecs.events.GLTF_ANIMATION_FINISHED, (event) => {
       console.log('Animation finished: ', event.data.name)
       dataAttribute.set(eid, {
         finished: true,
@@ -30,17 +30,20 @@ const AnimationDebugComponent = ecs.registerComponent({
         switch (model.animationClip) {
           case 'SwimmingStraight':
             ecs.GltfModel.set(world, eid, {
-              animationClip: 'TurningLeftStart'
+              animationClip: 'TurningLeftStart',
+              timeScale: 80
             })
             break
           case 'TurningLeftStart':
             ecs.GltfModel.set(world, eid, {
-              animationClip: 'TurningLeftEnd'
+              animationClip: 'TurningLeftEnd',
+              timeScale: 80
             })
             break
           case 'TurningLeftEnd':
             ecs.GltfModel.set(world, eid, {
-              animationClip: 'SwimmingStraight'
+              animationClip: 'SwimmingStraight',
+              timeScale: 20
             })
             break
           default:
@@ -103,9 +106,6 @@ const AnimationDebugComponent = ecs.registerComponent({
         ${camera_follower.cameraQuatZ}
         CameraQuatW:
         ${camera_follower.cameraQuatW}
-
-        Progress:
-        ${/*progress.toFixed(1)*/1}%
 
         Loop:
         ${gltf.loop}

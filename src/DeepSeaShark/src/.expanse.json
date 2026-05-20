@@ -166,7 +166,7 @@
           "asset": "assets/shark_all.glb"
         },
         "animationClip": "SwimmingStraight",
-        "loop": true,
+        "loop": false,
         "timeScale": 20,
         "crossFadeDuration": 0
       },
