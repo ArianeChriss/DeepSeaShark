@@ -14,6 +14,7 @@ const AnimationDebugComponent = ecs.registerComponent({
 
   data: {
     finished: ecs.boolean,
+    url: ecs.string
   },
   
   stateMachine: ({defineState, eid, world, dataAttribute}) => {
@@ -21,7 +22,34 @@ const AnimationDebugComponent = ecs.registerComponent({
       console.log('Animation finished: ', event.data.name)
       dataAttribute.set(eid, {
         finished: true,
+        url: ecs.GltfModel.get(world, eid).url
       })
+      
+      if (ecs.GltfModel.has(world, eid)) {
+        const model = ecs.GltfModel.get(world, eid)
+        switch (model.url) {
+          case 'assets/shark_baked.glb':
+            ecs.GltfModel.set(world, eid, {
+              url:'assets/shark_left_start.glb'
+            })
+            break
+          case 'assets/shark_left_start.glb':
+            ecs.GltfModel.set(world, eid, {
+              url:'assets/shark_left_end.glb'
+            })
+            break
+          case 'assets/shark_left_end.glb':
+            ecs.GltfModel.set(world, eid, {
+              url:'assets/shark_baked.glb'
+            })
+            break
+          default:
+            console.log("no matching url found")
+        }
+      }
+      else {
+        console.log("no matching eid found")
+      }
     })
   },
 
@@ -63,6 +91,9 @@ const AnimationDebugComponent = ecs.registerComponent({
 
         Finished:
         ${component.data.finished}
+
+        URL:
+        ${component.data.url}
 
         CameraQuatX:
         ${camera_follower.cameraQuatX}

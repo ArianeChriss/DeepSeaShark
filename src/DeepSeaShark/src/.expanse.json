@@ -172,7 +172,7 @@
         "timeScale": 20,
         "paused": false,
         "reverse": false,
-        "repetitions": 4
+        "crossFadeDuration": 0.5
       },
       "name": "shark_baked.glb",
       "order": 6.963045795883373,
@@ -180,43 +180,6 @@
         "castShadow": true,
         "receiveShadow": true
       }
-    },
-    "67a4da93-bd72-4021-b8ab-a51051837213": {
-      "id": "67a4da93-bd72-4021-b8ab-a51051837213",
-      "position": [
-        0,
-        0,
-        0
-      ],
-      "rotation": [
-        0,
-        0,
-        0,
-        1
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "geometry": null,
-      "material": null,
-      "parentId": "88453035-dc0f-486d-868a-8ff7c2fda864",
-      "components": {
-        "4c9ec478-d598-46c3-b459-de19eb156793": {
-          "id": "4c9ec478-d598-46c3-b459-de19eb156793",
-          "name": "selective-filter-renderer",
-          "parameters": {}
-        },
-        "b9f3a5e7-f3c7-457d-8079-44840e485468": {
-          "id": "b9f3a5e7-f3c7-457d-8079-44840e485468",
-          "name": "bootstrap-component",
-          "parameters": {}
-        }
-      },
-      "name": "SceneManager",
-      "order": 7.9677077050683245,
-      "disabled": true
     }
   },
   "spaces": {
