@@ -147,8 +147,6 @@
         1.0000000000000009,
         1.0000000000000009
       ],
-      "geometry": null,
-      "material": null,
       "parentId": "88453035-dc0f-486d-868a-8ff7c2fda864",
       "components": {
         "cbe1c44a-21c6-486e-9893-f5fcc9b9d638": {
@@ -165,14 +163,12 @@
       "gltfModel": {
         "src": {
           "type": "asset",
-          "asset": "assets/shark_baked.glb"
+          "asset": "assets/shark_all.glb"
         },
-        "animationClip": "Action",
+        "animationClip": "SwimmingStraight",
         "loop": true,
         "timeScale": 20,
-        "paused": false,
-        "reverse": false,
-        "crossFadeDuration": 0.5
+        "crossFadeDuration": 0
       },
       "name": "shark_baked.glb",
       "order": 6.963045795883373,

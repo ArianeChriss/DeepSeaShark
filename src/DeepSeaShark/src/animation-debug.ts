@@ -27,24 +27,24 @@ const AnimationDebugComponent = ecs.registerComponent({
       
       if (ecs.GltfModel.has(world, eid)) {
         const model = ecs.GltfModel.get(world, eid)
-        switch (model.url) {
-          case 'assets/shark_baked.glb':
+        switch (model.animationClip) {
+          case 'SwimmingStraight':
             ecs.GltfModel.set(world, eid, {
-              url:'assets/shark_left_start.glb'
+              animationClip: 'TurningLeftStart'
             })
             break
-          case 'assets/shark_left_start.glb':
+          case 'TurningLeftStart':
             ecs.GltfModel.set(world, eid, {
-              url:'assets/shark_left_end.glb'
+              animationClip: 'TurningLeftEnd'
             })
             break
-          case 'assets/shark_left_end.glb':
+          case 'TurningLeftEnd':
             ecs.GltfModel.set(world, eid, {
-              url:'assets/shark_baked.glb'
+              animationClip: 'SwimmingStraight'
             })
             break
           default:
-            console.log("no matching url found")
+            console.log("no matching animation clip found")
         }
       }
       else {
