@@ -19,6 +19,8 @@ const FollowerCameraComponent = ecs.registerComponent({
     cameraQuatY: ecs.f32,
     cameraQuatZ: ecs.f32,
     cameraQuatW: ecs.f32,
+
+    signedYawDelta: ecs.f32
   },
 
   schemaDefaults: {
@@ -35,6 +37,8 @@ const FollowerCameraComponent = ecs.registerComponent({
     cameraQuatY: 0,
     cameraQuatZ: 0,
     cameraQuatW: 0,
+
+    signedYawDelta: 0
   },
 
   data: {
@@ -47,6 +51,11 @@ const FollowerCameraComponent = ecs.registerComponent({
     initialOffsetY: ecs.f32,
     initialOffsetZ: ecs.f32,
     hasInitialOffset: ecs.boolean,
+
+    previousForwardX: ecs.f32,
+    previousForwardZ: ecs.f32,
+    hasPreviousForward: ecs.boolean,
+    currentForward: THREE.Vector3
   },
 
   add: (world, component) => {
@@ -119,6 +128,51 @@ const FollowerCameraComponent = ecs.registerComponent({
     })
     
     objectWorldPosition = ecs.Position.get(world, component.eid)
+    
+    component.data.currentForward = new THREE.Vector3(0, 0, -1)
+    component.data.currentForward.applyQuaternion(cameraQuaternion)
+    component.data.currentForward.y = 0
+    component.data.currentForward.normalize()
+
+    if (!component.data.hasPreviousForward) {
+      component.data.previousForwardX = component.data.currentForward.x
+      component.data.previousForwardZ = component.data.currentForward.z
+      component.data.hasPreviousForward = true
+      return
+    }
+
+    const previousForward = new THREE.Vector3(
+      component.data.previousForwardX,
+      0,
+      component.data.previousForwardZ
+    )
+
+    const crossY = previousForward.x * component.data.currentForward.z -
+    previousForward.z * component.data.currentForward.x
+
+    const dot = previousForward.x * component.data.currentForward.z +
+    previousForward.z * component.data.currentForward.z
+
+    component.schema.signedYawDelta = Math.atan2(crossY, dot)
+
+    component.data.previousForwardX = component.data.currentForward.x
+    component.data.previousForwardZ = component.data.currentForward.z
+    
+    const turnThreshold = 0.03 // radians, about 1.7 degrees
+
+    const clip = ecs.GltfModel.get(world, component.eid).animationClip
+    // TODO: put in turning steady animation and switching logic
+    /*if (component.schema.signedYawDelta > turnThreshold) {
+      if (clip == 'Turning')
+      // play TurnLeft
+    } else if (component.schema.signedYawDelta < -turnThreshold) {
+      console.log("turning right")
+      // play TurnRight
+    } else {
+      // play Swim / Idle
+    }*/
+
+
     /*
     let previousX = component.data.previousX
     let previousY = component.data.previousY
